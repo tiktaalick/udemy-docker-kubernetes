@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY package.json .
 
+# Ignoring security :-)
+RUN npm config set strict-ssl false
+
 RUN npm install
 
 COPY . .

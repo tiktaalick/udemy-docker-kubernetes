@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  mongodb:
+    image: 'mongo' # Starts with --rm by default
+    volumes: 
+      - data:/data/db
+    env_file:
+      - ./env/mongo.env
+    container_name: mongodb # If not mentioned then auto-generated
+    networks:
+      - multi-container-app-network # If not mentioned then auto-generated
+  backend:
+    build: ./backend # Runs the Dockerfile in that directory
+    ports:
+      - '80:80'
+    volumes:
+      - logs:/app/logs    # Named volume
+      - ./backend:/app    # Mounted volume with relative path
+      - /app/node_modules # Anonymous volume
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+    container_name: backend # If not mentioned then auto-generated
+    networks:
+      - multi-container-app-network # If not mentioned then auto-generated
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+    container_name: frontend # If not mentioned then auto-generated
+    networks:
+      - multi-container-app-network # If not mentioned then auto-generated
+
+# All named volumes should be mentioned here
+volumes:
+  data:
+  logs:
+
+# All networks should be mentioned here
+networks:
+  multi-container-app-network:
