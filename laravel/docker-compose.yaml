@@ -38,6 +38,9 @@ services:
     volumes:
       - ./src:/var/www/html
   artisan:
+    # Utility container. The Laravel PHP artisan serve command helps running applications on the PHP development server. As a developer, you can use
+    # Laravel artisan serve to develop and test various functions within the application. It also accepts two additional options. You can use the host
+    # for changing application's address and port.
     build:
       context: .
       dockerfile: dockerfiles/php.dockerfile
