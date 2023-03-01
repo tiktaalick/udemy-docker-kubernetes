@@ -1,3 +1,6 @@
 .idea
 node_modules
 *.txt
+*.cer
+/laravel/certificates/*.pem
+/laravel/certificates/*.crt
