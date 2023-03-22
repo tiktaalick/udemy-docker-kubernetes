@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: second-app-deployment
+spec:
+  # Specification for a pod
+  replicas: 1
+  selector:
+    # All apps with these matching labels should be controlled by this deployment
+    matchLabels:
+      app: second-app
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: second-app
+        tier: backend
+    spec:
+      containers:
+        - name: second-node
+          image: tiktaalick/kub-first-app:2
+        # - name: ...
+        #   image: ...
